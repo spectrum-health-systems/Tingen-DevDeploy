@@ -16,7 +16,6 @@ internal static class Program
         var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         VerifyFramework(timestamp);
-
     }
 
     private static void VerifyFramework(string timestamp)
@@ -27,6 +26,11 @@ internal static class Program
     private static void VerifyRequiredDataDirectories(string timestamp)
     {
         var dataDirectories = GetListOfRequiredDataDirectories();
+
+        if (!Directory.Exists(@"C:\TingenData\Lieutenant\Logs"))
+        {
+           Directory.CreateDirectory(@"C:\TingenData\Lieutenant\Logs");
+        }
 
         foreach (var dataDirectory in dataDirectories)
         {
@@ -48,7 +52,6 @@ internal static class Program
             @"C:\TingenData\Commander\Logs",
             @"C:\TingenData\Commander\Staging",
             @"C:\TingenData\Commander\Temporary",
-            @"C:\TingenData\Deploy",
             @"C:\TingenData\Lieutenant",
             @"C:\TingenData\Lieutenant\Logs",
             @"C:\TingenData\Lieutenant\Staging",
