@@ -144,7 +144,7 @@ internal static class Program
     private static void ExtractRepoZip(string timestamp)
     {
         StatusUpdate("Extracting repository zip...", timestamp);
-        ZipFile.ExtractToDirectory(@"C:\TingenData\Lieutenant\Staging\Tingen_development.zip", @"C:\TingenData\Lieutenant\Staging\Tingen_development");
+        ZipFile.ExtractToDirectory(@"C:\TingenData\Lieutenant\Staging\Tingen_development.zip", @"C:\TingenData\Lieutenant\Staging");
     }
 
     private static void RefreshServiceDirectory(string timestamp)
@@ -153,14 +153,14 @@ internal static class Program
         {
             StatusUpdate("Refreshing web service directory...", timestamp);
             Directory.Delete(@"C:\Tingen\UAT", true);
-            Directory.CreateDirectory(@"C:\Tingen\UAT");
+            Directory.CreateDirectory(@"C:\Tingen\UAT\bin\roslyn");
         }
     }
 
     private static void CopyBinFiles(string timestamp)
     {
         StatusUpdate("Copying repository files...", timestamp);
-        var sourceDirectory = @"C:\TingenData\Lieutenant\Staging\Tingen_development\src\bin";
+        var sourceDirectory = @"C:\TingenData\Lieutenant\Staging\Tingen_development-development\src\bin";
         var destinationDirectory = @"C:\Tingen\UAT\bin";
         CopyDirectory(sourceDirectory, destinationDirectory, timestamp);
     }
@@ -170,7 +170,7 @@ internal static class Program
         foreach (string file in GetServiceFiles())
         {
             StatusUpdate($"Copying {file}...", timestamp);
-            File.Copy($@"{source}\{file}", $@"{target}\{file}");
+            File.Copy($@"C:\TingenData\Lieutenant\Staging\Tingen_development-development\src\{file}", $@"C:\Tingen\UAT\{file}");
         }
     }
 
