@@ -138,7 +138,7 @@ internal static class Program
     {
         StatusUpdate("Downloading repository zip...", timestamp);
         var client = new WebClient();
-        client.DownloadFile("https://github.com/spectrum-health-systems/Tingen_development/archive/refs/heads/development.zip", @"C:\TingenData\Lieutenant\Staging\Tingen_development.zip");
+        client.DownloadFile("https://github.com/spectrum-health-systems/Tingen_development/archive/refs/heads/staging.zip", @"C:\TingenData\Lieutenant\Staging");
     }
 
     private static void ExtractRepoZip(string timestamp)
