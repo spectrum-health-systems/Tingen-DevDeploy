@@ -7,6 +7,9 @@
 
 // b240525.0837
 
+using System.IO.Compression;
+using System.Net;
+
 internal static class Program
 {
     private static void Main(string[] args)
@@ -16,36 +19,57 @@ internal static class Program
         var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         VerifyFramework(timestamp);
+
+        RefreshStagingEnvironment(timestamp);
+
+        RefreshServiceDirectory(timestamp);
+
+        DownloadRepoZip(timestamp);
+
+        ExtractRepoZip(timestamp);
+
+        CopyBinFiles(timestamp);
+
+
     }
 
+    /// <summary>Verify Tingen framework</summary>
+    /// <param name="timestamp">Timesamp for logging purposes.</param>
     private static void VerifyFramework(string timestamp)
     {
-        VerifyRequiredDataDirectories(timestamp);
+        VerifyDataDirectories(timestamp);
     }
 
-    private static void VerifyRequiredDataDirectories(string timestamp)
+    /// <summary>Verify framework directories</summary>
+    /// <param name="timestamp">Timesamp for logging purposes.</param>
+    private static void VerifyDataDirectories(string timestamp)
     {
-        var dataDirectories = GetListOfRequiredDataDirectories();
+        VerifyLogDirectory();
 
-        if (!Directory.Exists(@"C:\TingenData\Lieutenant\Logs"))
-        {
-           Directory.CreateDirectory(@"C:\TingenData\Lieutenant\Logs");
-        }
-
-        foreach (var dataDirectory in dataDirectories)
+        foreach (var dataDirectory in GetListOfDataDirectories())
         {
             if (!Directory.Exists(dataDirectory))
             {
-                StatusUpdate($"Creating directory: {dataDirectory}...{Environment.NewLine}", timestamp);
+                StatusUpdate($"Creating directory: {dataDirectory}...", timestamp);
                 Directory.CreateDirectory(dataDirectory);
             }
         }
     }
 
-    private static List<string> GetListOfRequiredDataDirectories()
+    private static void VerifyLogDirectory()
     {
-        return new List<string>
+        if (!Directory.Exists(@"C:\TingenData\Lieutenant\Logs"))
         {
+            Directory.CreateDirectory(@"C:\TingenData\Lieutenant\Logs");
+        }
+    }
+
+    /// <summary>Get the list of required data directories.</summary>
+    /// <returns></returns>
+    private static List<string> GetListOfDataDirectories()
+    {
+        return
+        [
             @"C:\TingenData",
             @"C:\TingenData\Archive",
             @"C:\TingenData\Commander",
@@ -97,7 +121,98 @@ internal static class Program
             @"C:\TingenData\UAT\Reports",
             @"C:\TingenData\UAT\Templates",
             @"C:\TingenData\UAT\Temporary",
-        };
+        ];
+    }
+
+    private static void RefreshStagingEnvironment(string timestamp)
+    {
+        if (Directory.Exists(@"C:\TingenData\Lieutenant\Staging"))
+        {
+            StatusUpdate("Refreshing staging environment...", timestamp);
+            Directory.Delete(@"C:\TingenData\Lieutenant\Staging", true);
+            Directory.CreateDirectory(@"C:\TingenData\Lieutenant\Staging");
+        }
+    }
+
+    private static void DownloadRepoZip(string timestamp)
+    {
+        StatusUpdate("Downloading repository zip...", timestamp);
+        var client = new WebClient();
+        client.DownloadFile("https://github.com/spectrum-health-systems/Tingen_development/archive/refs/heads/development.zip", @"C:\TingenData\Lieutenant\Staging\Tingen_development.zip");
+    }
+
+    private static void ExtractRepoZip(string timestamp)
+    {
+        StatusUpdate("Extracting repository zip...", timestamp);
+        ZipFile.ExtractToDirectory(@"C:\TingenData\Lieutenant\Staging\Tingen_development.zip", @"C:\TingenData\Lieutenant\Staging\Tingen_development");
+    }
+
+    private static void RefreshServiceDirectory(string timestamp)
+    {
+        if (Directory.Exists(@"C:\Tingen\UAT"))
+        {
+            StatusUpdate("Refreshing web service directory...", timestamp);
+            Directory.Delete(@"C:\Tingen\UAT", true);
+            Directory.CreateDirectory(@"C:\Tingen\UAT");
+        }
+    }
+
+    private static void CopyBinFiles(string timestamp)
+    {
+        StatusUpdate("Copying repository files...", timestamp);
+        var sourceDirectory = @"C:\TingenData\Lieutenant\Staging\Tingen_development\src\bin";
+        var destinationDirectory = @"C:\Tingen\UAT\bin";
+        CopyDirectory(sourceDirectory, destinationDirectory, timestamp);
+    }
+
+    private static void CopyServiceFiles(string source, string target, string timestamp)
+    {
+        foreach (string file in GetServiceFiles())
+        {
+            StatusUpdate($"Copying {file}...", timestamp);
+            File.Copy($@"{source}\{file}", $@"{target}\{file}");
+        }
+    }
+
+    private static List<string> GetServiceFiles()
+    {
+        return
+        [
+            "Tingen_development.asmx",
+            "Tingen_development.asmx.cs",
+            "packages.config",
+            "Web.config",
+            "Web.Debug.config",
+            "Web.Release.config"
+        ];
+    }
+
+
+    private static void CopyDirectory(string source, string target, string timestamp)
+    {
+        DirectoryInfo dirToCopy       = new DirectoryInfo(source);
+        DirectoryInfo[] subDirsToCopy = GetSubDirs(source, target);
+
+        foreach (FileInfo file in dirToCopy.GetFiles())
+        {
+            StatusUpdate($"Copying {file.FullName}...", timestamp);
+            _=file.CopyTo(Path.Combine(target, file.Name));
+        }
+
+        foreach (var (subDir, newTargetDir) in from DirectoryInfo subDir in subDirsToCopy
+                                               let newTargetDir = Path.Combine(target, subDir.Name)
+                                               select (subDir, newTargetDir))
+        {
+            StatusUpdate($"Copying {subDir}...", timestamp);
+            CopyDirectory(subDir.FullName, newTargetDir, timestamp);
+        }
+
+    }
+
+    private static DirectoryInfo[] GetSubDirs(string source, string target)
+    {
+        DirectoryInfo dirToCopy = new DirectoryInfo(source);
+        return dirToCopy.GetDirectories();
     }
 
     private static void StatusUpdate(string message, string timestamp)
