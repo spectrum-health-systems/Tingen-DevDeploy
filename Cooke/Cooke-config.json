@@ -1,6 +1,6 @@
 {
   "RepositoryName": "TingenDeploy",
-  "RepositoryURL": "TingenDeploy",
+  "RepositoryURL": "https://github.com/spectrum-health-systems/TingenDevDeploy",
   "GitFolderLocation": "../",
   "TemporaryDataFolder": "./temp/",
   "MonthAbbreviations": [
