@@ -1,0 +1,26 @@
+{
+  "RepositoryName": "TingenDeploy",
+  "RepositoryURL": "https://github.com/spectrum-health-systems/TingenDevDeploy",
+  "GitFolderLocation": "../",
+  "TemporaryDataFolder": "./temp/",
+  "MonthAbbreviations": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "ChangelogExportLocation": "./changelog/",
+  "ChangelogGitCommand": "git log --pretty=fuller",
+  "ChangelogStartTag": "[",
+  "ChangelogEndTag": "]",
+  "ChangelogPublicLocation": "../",
+  "ReleaseNoteExportLocation": "./releasenotes/"
+}
