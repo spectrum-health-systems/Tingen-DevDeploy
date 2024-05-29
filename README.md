@@ -1,4 +1,10 @@
-<!-- u240528 -->
+<!-- u240529 -->
+
+<div align="center">
+
+  ![logo](./.github/images/logos/TingenDevDeploy_README.png)
+
+</div>
 
 # About TingenDevDeploy
 TingenDevDeploy simple command-line utility to deploy the Tingen_development web service.
