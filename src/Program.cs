@@ -1,11 +1,11 @@
-﻿// ================================================================ v1.0.0 =====
+﻿// ================================================================ v1.0.3 =====
 // TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
-// ================================================================ 240525 =====
+// ================================================================ 240530 =====
 
-// b240525.1044
+// b240530.1417
 
 /* This is a simple command-line application that deploys TingenDevelopment.
  * Most of the settings/variables are hardcoded, and are specific to the
@@ -225,14 +225,16 @@ namespace TingenDevDeploy
 
         private static List<string> GetServiceFiles()
         {
+            // This will eventually be replaced with "TingenDevelopment.asmx" and "TingenDevelopment.asmx.cs"
+
             return
             [
-                "TingenDevelopment.asmx",
-                    "TingenDevelopment.asmx.cs",
-                    "packages.config",
-                    "Web.config",
-                    "Web.Debug.config",
-                    "Web.Release.config"
+                "Tingen_development.asmx",
+                "Tingen_development.asmx.cs",
+                "packages.config",
+                "Web.config",
+                "Web.Debug.config",
+                "Web.Release.config"
             ];
         }
     }
