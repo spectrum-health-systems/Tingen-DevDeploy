@@ -229,7 +229,7 @@ namespace TingenDevDeploy
 
             return
             [
-                "Tingen_Development.asmx",
+                "Tingen_development.asmx",
                 "Tingen_development.asmx.cs",
                 "packages.config",
                 "Web.config",
