@@ -1,5 +1,5 @@
 ﻿// ================================================================ v1.0.0 =====
-// TingenDevDeploy: A command-line deployment utility for Tingen_development.
+// TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
@@ -7,9 +7,9 @@
 
 // b240525.1044
 
-/* This is a simple command-line application that deploys Tingen_development.
+/* This is a simple command-line application that deploys TingenDevelopment.
  * Most of the settings/variables are hardcoded, and are specific to the
- * Tingen_development repository.
+ * TingenDevelopment repository.
  *
  * Eventually this will be superceded by Tingen Lieutenant and Tingen Commander.
  */
@@ -81,8 +81,8 @@ namespace TingenDevDeploy
 
         private static void DownloadRepoZip(string timestamp)
         {
-            const string url = "https://github.com/spectrum-health-systems/Tingen_development/archive/refs/heads/development.zip";
-            const string target = @"C:\TingenData\Lieutenant\Staging\Tingen_development.zip";
+            const string url = "https://github.com/spectrum-health-systems/TingenDevelopment/archive/refs/heads/development.zip";
+            const string target = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment.zip";
 
             StatusUpdate("Downloading repository zip...", timestamp);
             var client = new WebClient();
@@ -91,7 +91,7 @@ namespace TingenDevDeploy
 
         private static void ExtractRepoZip(string timestamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\Tingen_development.zip";
+            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment.zip";
             const string target = @"C:\TingenData\Lieutenant\Staging";
 
             StatusUpdate("Extracting repository zip...", timestamp);
@@ -117,7 +117,7 @@ namespace TingenDevDeploy
 
         private static void CopyBinFiles(string timestamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\Tingen_development-development\src\bin";
+            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment-development\src\bin";
             const string target = @"C:\Tingen\UAT\bin";
 
             StatusUpdate("Copying repository files...", timestamp);
@@ -127,7 +127,7 @@ namespace TingenDevDeploy
 
         private static void CopyServiceFiles(string timestamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\Tingen_development-development\src";
+            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment-development\src";
             const string target = @"C:\Tingen\UAT";
 
             foreach (string file in GetServiceFiles())
@@ -234,8 +234,8 @@ namespace TingenDevDeploy
         {
             return
             [
-                "Tingen_development.asmx",
-                    "Tingen_development.asmx.cs",
+                "TingenDevelopment.asmx",
+                    "TingenDevelopment.asmx.cs",
                     "packages.config",
                     "Web.config",
                     "Web.Debug.config",
