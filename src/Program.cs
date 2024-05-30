@@ -225,14 +225,16 @@ namespace TingenDevDeploy
 
         private static List<string> GetServiceFiles()
         {
+            // This will eventually be replaced with "TingenDevelopment.asmx" and "TingenDevelopment.asmx.cs"
+
             return
             [
-                "TingenDevelopment.asmx",
-                    "TingenDevelopment.asmx.cs",
-                    "packages.config",
-                    "Web.config",
-                    "Web.Debug.config",
-                    "Web.Release.config"
+                "Tingen_Development.asmx",
+                "Tingen_development.asmx.cs",
+                "packages.config",
+                "Web.config",
+                "Web.Debug.config",
+                "Web.Release.config"
             ];
         }
     }
