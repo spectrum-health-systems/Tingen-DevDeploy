@@ -28,19 +28,12 @@ namespace TingenDevDeploy
             var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             VerifyLogDirectory();
-            Thread.Sleep(1000);
             VerifyFramework(timestamp);
-            Thread.Sleep(1000);
             RefreshStagingEnvironment(timestamp);
-            Thread.Sleep(1000);
             RefreshServiceDirectory(timestamp);
-            Thread.Sleep(1000);
             DownloadRepoZip(timestamp);
-            Thread.Sleep(1000);
             ExtractRepoZip(timestamp);
-            Thread.Sleep(1000);
             CopyBinFiles(timestamp);
-            Thread.Sleep(1000);
             CopyServiceFiles(timestamp);
         }
 
