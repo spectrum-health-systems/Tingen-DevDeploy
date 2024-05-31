@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DebugType>embedded</DebugType>
-    <Version>1.0.3</Version>
-    <FileVersion>1.0.3</FileVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0</FileVersion>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
