@@ -191,6 +191,7 @@ namespace TingenDevDeploy
             @"C:\TingenData\LIVE\Message\Error",
             @"C:\TingenData\LIVE\Message\Warning",
             @"C:\TingenData\LIVE\Report",
+            @"C:\TingenData\LIVE\Session",
             @"C:\TingenData\LIVE\Template",
             @"C:\TingenData\LIVE\Temporary",
             @"C:\TingenData\Primeval",
@@ -221,6 +222,7 @@ namespace TingenDevDeploy
             @"C:\TingenData\UAT\Message\Error",
             @"C:\TingenData\UAT\Message\Warning",
             @"C:\TingenData\UAT\Report",
+            @"C:\TingenData\UAT\Session",
             @"C:\TingenData\UAT\Template",
             @"C:\TingenData\UAT\Temporary",
         ];
