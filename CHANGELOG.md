@@ -5,6 +5,10 @@
 
 # CHANGELOG
 
+## 1.1.1 - 2024-06-3
+
+`ADDED` Sessions path  
+
 ## 1.1.0 - 2024-05-31
 
 `UPDATED` Directory naming syntax and structure  
