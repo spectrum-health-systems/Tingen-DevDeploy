@@ -1,9 +1,9 @@
-﻿// ================================================================ v1.1.0 =====
+﻿// ================================================================ v1.1.1 =====
 // TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
-// ================================================================ 240531 =====
+// ================================================================ 240603 =====
 
 // b240531.1213
 
