@@ -1,11 +1,11 @@
-﻿// ================================================================ v1.1.1 =====
+﻿// ================================================================ v1.2.0 =====
 // TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
-// ================================================================ 240603 =====
+// ================================================================ 240606 =====
 
-// b240531.1213
+// b240606.1239
 
 /* This is a simple command-line application that deploys TingenDevelopment.
  * Most of the settings/variables are hardcoded, and are specific to the
@@ -167,64 +167,10 @@ namespace TingenDevDeploy
         private static List<string> GetListOfDataDirectories() =>
         [
             @"C:\TingenData",
-            @"C:\TingenData\Archive",
-            @"C:\TingenData\Commander",
-            @"C:\TingenData\Commander\Log",
-            @"C:\TingenData\Commander\Staging",
-            @"C:\TingenData\Commander\Temporary",
             @"C:\TingenData\Lieutenant",
             @"C:\TingenData\Lieutenant\Log",
             @"C:\TingenData\Lieutenant\Staging",
             @"C:\TingenData\Lieutenant\Temporary",
-            @"C:\TingenData\LIVE",
-            @"C:\TingenData\LIVE\Admin",
-            @"C:\TingenData\LIVE\Archive",
-            @"C:\TingenData\LIVE\Config",
-            @"C:\TingenData\LIVE\Data",
-            @"C:\TingenData\LIVE\Data\Export",
-            @"C:\TingenData\LIVE\Data\Import",
-            @"C:\TingenData\LIVE\Debug",
-            @"C:\TingenData\LIVE\Extension",
-            @"C:\TingenData\LIVE\Log",
-            @"C:\TingenData\LIVE\Message",
-            @"C:\TingenData\LIVE\Message\Alert",
-            @"C:\TingenData\LIVE\Message\Error",
-            @"C:\TingenData\LIVE\Message\Warning",
-            @"C:\TingenData\LIVE\Report",
-            @"C:\TingenData\LIVE\Session",
-            @"C:\TingenData\LIVE\Template",
-            @"C:\TingenData\LIVE\Temporary",
-            @"C:\TingenData\Primeval",
-            @"C:\TingenData\Public",
-            @"C:\TingenData\Public\Alert",
-            @"C:\TingenData\Public\Error",
-            @"C:\TingenData\Public\Export",
-            @"C:\TingenData\Public\Report",
-            @"C:\TingenData\Public\Warning",
-            @"C:\TingenData\Remote",
-            @"C:\TingenData\Remote\Alert",
-            @"C:\TingenData\Remote\Error",
-            @"C:\TingenData\Remote\Export",
-            @"C:\TingenData\Remote\Report",
-            @"C:\TingenData\Remote\Warning",
-            @"C:\TingenData\UAT",
-            @"C:\TingenData\UAT\Admin",
-            @"C:\TingenData\UAT\Archive",
-            @"C:\TingenData\UAT\Config",
-            @"C:\TingenData\UAT\RawData",
-            @"C:\TingenData\UAT\RawData\Export",
-            @"C:\TingenData\UAT\RawData\Import",
-            @"C:\TingenData\UAT\Debug",
-            @"C:\TingenData\UAT\Extension",
-            @"C:\TingenData\UAT\Log",
-            @"C:\TingenData\UAT\Message",
-            @"C:\TingenData\UAT\Message\Alert",
-            @"C:\TingenData\UAT\Message\Error",
-            @"C:\TingenData\UAT\Message\Warning",
-            @"C:\TingenData\UAT\Report",
-            @"C:\TingenData\UAT\Session",
-            @"C:\TingenData\UAT\Template",
-            @"C:\TingenData\UAT\Temporary",
         ];
 
         private static List<string> GetServiceFiles()
