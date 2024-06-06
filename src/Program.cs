@@ -161,14 +161,14 @@ namespace TingenDevDeploy
         private static void StatusUpdate(string message, string timestamp)
         {
             Console.WriteLine(message);
-            File.AppendAllText($@"C:\TingenData\Lieutenant\Logs\{timestamp}devdeploy", message);
+            File.AppendAllText($@"C:\TingenData\Lieutenant\Logs\{timestamp}.devdeploy", message);
         }
 
         private static List<string> GetListOfDataDirectories() =>
         [
             @"C:\TingenData",
             @"C:\TingenData\Lieutenant",
-            @"C:\TingenData\Lieutenant\Log",
+            @"C:\TingenData\Lieutenant\Logs",
             @"C:\TingenData\Lieutenant\Staging",
             @"C:\TingenData\Lieutenant\Temporary",
         ];
