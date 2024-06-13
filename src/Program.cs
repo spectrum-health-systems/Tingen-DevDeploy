@@ -1,11 +1,11 @@
-﻿// ================================================================ v1.2.0 =====
+﻿// ================================================================ v1.3.0 =====
 // TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
-// ================================================================ 240606 =====
+// ================================================================ 240613 =====
 
-// b240606.1239
+// b240613.1036
 
 /* This is a simple command-line application that deploys TingenDevelopment.
  * Most of the settings/variables are hardcoded, and are specific to the
@@ -52,7 +52,7 @@ namespace TingenDevDeploy
 
         private static void VerifyLogDirectory()
         {
-            const string logDirectory = @"C:\TingenData\Lieutenant\Logs";
+            const string logDirectory = @"C:\TingenData\DevDeploy\Logs";
 
             if (!Directory.Exists(logDirectory))
             {
@@ -62,7 +62,7 @@ namespace TingenDevDeploy
 
         private static void RefreshStagingEnvironment(string timestamp)
         {
-            const string stagingDirectory = @"C:\TingenData\Lieutenant\Staging";
+            const string stagingDirectory = @"C:\TingenData\DevDeploy\Staging";
 
             if (Directory.Exists(stagingDirectory))
             {
@@ -74,8 +74,8 @@ namespace TingenDevDeploy
 
         private static void DownloadRepoZip(string timestamp)
         {
-            const string url = "https://github.com/spectrum-health-systems/TingenDevelopment/archive/refs/heads/development.zip";
-            const string target = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment.zip";
+            const string url = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
+            const string target = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment.zip";
 
             StatusUpdate("Downloading repository zip...", timestamp);
             var client = new WebClient();
@@ -84,8 +84,8 @@ namespace TingenDevDeploy
 
         private static void ExtractRepoZip(string timestamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment.zip";
-            const string target = @"C:\TingenData\Lieutenant\Staging";
+            const string source = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment.zip";
+            const string target = @"C:\TingenData\DevDeploy\Staging";
 
             StatusUpdate("Extracting repository zip...", timestamp);
             ZipFile.ExtractToDirectory(source, target);
@@ -110,7 +110,7 @@ namespace TingenDevDeploy
 
         private static void CopyBinFiles(string timestamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment-development\src\bin";
+            const string source = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment-development\src\bin";
             const string target = @"C:\Tingen\UAT\bin";
 
             StatusUpdate("Copying repository files...", timestamp);
@@ -120,7 +120,7 @@ namespace TingenDevDeploy
 
         private static void CopyServiceFiles(string timestamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment-development\src";
+            const string source = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment-development\src";
             const string target = @"C:\Tingen\UAT";
 
             foreach (string file in GetServiceFiles())
@@ -132,7 +132,7 @@ namespace TingenDevDeploy
 
         private static void CopyDirectory(string source, string target, string timestamp)
         {
-            DirectoryInfo dirToCopy       = new DirectoryInfo(source);
+            DirectoryInfo dirToCopy = new DirectoryInfo(source);
             DirectoryInfo[] subDirsToCopy = GetSubDirs(source, target);
 
             foreach (FileInfo file in dirToCopy.GetFiles())
@@ -161,22 +161,20 @@ namespace TingenDevDeploy
         private static void StatusUpdate(string message, string timestamp)
         {
             Console.WriteLine(message);
-            File.AppendAllText($@"C:\TingenData\Lieutenant\Logs\{timestamp}.devdeploy", message);
+            File.AppendAllText($@"C:\TingenData\DevDeploy\Logs\{timestamp}.devdeploy", message);
         }
 
         private static List<string> GetListOfDataDirectories() =>
         [
             @"C:\TingenData",
-            @"C:\TingenData\Lieutenant",
-            @"C:\TingenData\Lieutenant\Logs",
-            @"C:\TingenData\Lieutenant\Staging",
-            @"C:\TingenData\Lieutenant\Temporary",
+            @"C:\TingenData\DevDeploy",
+            @"C:\TingenData\DevDeploy\Logs",
+            @"C:\TingenData\DevDeploy\Staging",
+            @"C:\TingenData\DevDeploy\Temporary",
         ];
 
         private static List<string> GetServiceFiles()
         {
-            // This will eventually be replaced with "TingenDevelopment.asmx" and "TingenDevelopment.asmx.cs"
-
             return
             [
                 "Tingen_development.asmx",
