@@ -1,5 +1,5 @@
 ﻿// ================================================================ v1.3.0 =====
-// TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
+// Tingen-DevDeploy: A command-line deployment utility for Tingen-Development.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
@@ -7,11 +7,11 @@
 
 // b240613.1036
 
-/* This is a simple command-line application that deploys TingenDevelopment.
+/* This is a simple command-line application that deploys Tingen-Development.
  * Most of the settings/variables are hardcoded, and are specific to the
- * TingenDevelopment repository.
+ * Tingen-Development repository.
  *
- * Eventually this will be superceded by Tingen Lieutenant and Tingen Commander.
+ * Eventually this will be superceded by Tingen-Lieutenant and Tingen-Commander.
  */
 
 using System.IO.Compression;
