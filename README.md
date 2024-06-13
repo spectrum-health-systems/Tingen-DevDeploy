@@ -1,42 +1,58 @@
-<!-- u240529 -->
+<!-- u240613 -->
 
 <div align="center">
 
   ![logo](./.github/images/logos/TingenDevDeploy_README.png)
 
+  Version 1.3.0
+
 </div>
 
-# About TingenDevDeploy
-TingenDevDeploy simple command-line utility to deploy the Tingen_development web service.
+# About Tingen-DevDeploy
 
-## Features
+Tingen-DevDeploy simple command-line utility that deploys the *development branch* of the *Tingen-Development* repository.
 
-- Is a single, portable file
-- Is not customizable (not really a feature)
-- Verifies that all of the directories that Tingen requires exist, and creates them if they don't
-- Deploys the development branch of Tingen_development
+Tingen-DevDeploy was created to make deploying quick iterations of Tingen-Development for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway.)
+
+
+so it's the source code isn't elegant, doesn't really follow best practices, etc. But it gets the job done, and probably won't have to be modified from here on out.
+
+## The Good
+
+- A single, portable file.
 - Logs everything
+- Gets the job done!
+
+## The Bad
+
+- Not customizable (everything is hardcoded)
+- Is specifically for the *development* branch of the *Tingen_development* repository
+- 
+## The Ugly
+
+- Source code isn't elegent, and doesn't follow best practices
 
 # Installation
 
-Since TingenDevDeploy is a single, portable file, all you need to do to "install" it is:
+Since Tingen-DevDeploy is a single, portable file, all you need to do to "install" it is:
 
-1. Download the latest release
-2. Extract TingenDevDeploy to a location where it can be executed
+1. Download the [latest release](https://github.com/spectrum-health-systems/Tingen-DevDeploy/releases)
+2. Extract Tingen-DevDeploy to a location where it can be executed
 
 # Usage
 
-To use TingenDevDeploy:
+To use Tingen-DevDeploy:
 
 1. Open a command line where you extracted TingenDevDeploy
 2. Type `TingenDevDeploy`
 
-## What TingenDevDeploy does
+## What Tingen-DevDeploy does
 
 When you execute TingenDevDeploy, it:
 
 1. Verifies that a log directory exists
-2. Verifies the Tingen Framework (directories, data, etc.)
-3. Downloads the Tingen_development development branch and extracts all of the contents
-4. Removes/recreates the Tingen_development web service directory
-5. Copies the necessary web service files to the web service directory
+2. Verifies the Tingen-DevDeploy framework
+3. Downloads the *development* branch of the *Tingen_development* repository
+4. Extracts the downloaded repository data
+5. Removes/recreates the Tingen_development web service directory
+6. Copies the necessary web service files to the web service directory

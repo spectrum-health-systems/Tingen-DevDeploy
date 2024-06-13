@@ -1,17 +1,13 @@
-﻿// ================================================================ v1.2.0 =====
-// TingenDevDeploy: A command-line deployment utility for TingenDevelopment.
+﻿// ================================================================ v1.3.0 =====
+// Tingen-DevDeploy: A command-line deployment utility for Tingen-Development.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
-// ================================================================ 240606 =====
+// ================================================================ 240613 =====
 
-// b240606.1239
+// b240613.1209
 
-/* This is a simple command-line application that deploys TingenDevelopment.
- * Most of the settings/variables are hardcoded, and are specific to the
- * TingenDevelopment repository.
- *
- * Eventually this will be superceded by Tingen Lieutenant and Tingen Commander.
+/* Please see the Tingen-DevDeploy README for more information.
  */
 
 using System.IO.Compression;
@@ -19,164 +15,197 @@ using System.Net;
 
 namespace TingenDevDeploy
 {
-    internal class Program
+    /// <summary>The main entry point for the application.</summary>
+    internal static class Program
     {
+        private const string LogRoot                    = @"C:\TingenData\DevDeploy\Logs";
+        private const string StagingRoot                = @"C:\TingenData\DevDeploy\Staging";
+        private const string ZipUrl                     = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
+        private const string ZipDownloadPath            = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
+        private const string TingenUatServiceRoot       = @"C:\Tingen\UAT";
+        private const string TingenUatServiceRoslynPath = @"C:\Tingen\UAT\bin\roslyn";
+        private const string TingenStagingBinPath       = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src\bin";
+        private const string TingenUatServiceBinPath    = @"C:\Tingen\UAT\bin";
+        private const string TingenStagingServiceRoot   = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src";
+
+        /// <summary>Starting point.</summary>
+        /// <param name="args">The passed arguments.</param>
         static void Main(string[] args)
         {
             Console.Clear();
 
-            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var dateTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            VerifyLogDirectory();
-            VerifyFramework(timestamp);
-            RefreshStagingEnvironment(timestamp);
-            RefreshServiceDirectory(timestamp);
-            DownloadRepoZip(timestamp);
-            ExtractRepoZip(timestamp);
-            CopyBinFiles(timestamp);
-            CopyServiceFiles(timestamp);
+            VerifyLogPath();
+            VerifyDataPaths(dateTimeStamp);
+            RefreshStaging(dateTimeStamp);
+            RefreshServiceDirectory(dateTimeStamp);
+            DownloadRepoZip(dateTimeStamp);
+            ExtractRepoZip(dateTimeStamp);
+            CopyBinFiles(dateTimeStamp);
+            CopyServiceFiles(dateTimeStamp);
         }
 
-        private static void VerifyFramework(string timestamp) => VerifyDataDirectories(timestamp);
-
-        private static void VerifyDataDirectories(string timestamp)
+        /// <summary>Verify the log directory exists.</summary>
+        /// <remarks>
+        ///  <para>
+        ///   - Verify the log directory exists, since logs are written before anything else is setup.
+        ///  </para>
+        /// </remarks>
+        private static void VerifyLogPath()
         {
-            foreach (var dataDirectory in from dataDirectory in GetListOfDataDirectories()
-                                          where !Directory.Exists(dataDirectory)
-                                          select dataDirectory)
+            if (!Directory.Exists(LogRoot))
             {
-                StatusUpdate($"Creating directory: {dataDirectory}...", timestamp);
-                Directory.CreateDirectory(dataDirectory);
+                Directory.CreateDirectory(LogRoot);
             }
         }
 
-        private static void VerifyLogDirectory()
+        /// <summary>Verify the required Tingen-DevDeploy data directories exist.</summary>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void VerifyDataPaths(string dateTimeStamp)
         {
-            const string logDirectory = @"C:\TingenData\Lieutenant\Logs";
-
-            if (!Directory.Exists(logDirectory))
+            foreach (var dataPath in from dataDirectory in GetListOfDataDirectories()
+                                     where !Directory.Exists(dataDirectory)
+                                     select dataDirectory)
             {
-                Directory.CreateDirectory(logDirectory);
+                StatusUpdate($"Creating directory: {dataPath}...", dateTimeStamp);
+                Directory.CreateDirectory(dataPath);
             }
         }
 
-        private static void RefreshStagingEnvironment(string timestamp)
+        /// <summary>Refresh the Tingen-DevDeploy staging environment.</summary>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void RefreshStaging(string dateTimeStamp)
         {
-            const string stagingDirectory = @"C:\TingenData\Lieutenant\Staging";
-
-            if (Directory.Exists(stagingDirectory))
+            if (Directory.Exists(StagingRoot))
             {
-                StatusUpdate("Refreshing staging environment...", timestamp);
-                Directory.Delete(stagingDirectory, true);
-                Directory.CreateDirectory(stagingDirectory);
+                StatusUpdate("Refreshing staging environment...", dateTimeStamp);
+                Directory.Delete(StagingRoot, true);
+                Directory.CreateDirectory(StagingRoot);
             }
         }
 
-        private static void DownloadRepoZip(string timestamp)
+        /// <summary>Download the development branch of the Tingen-Development repository.</summary>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void DownloadRepoZip(string dateTimeStamp)
         {
-            const string url = "https://github.com/spectrum-health-systems/TingenDevelopment/archive/refs/heads/development.zip";
-            const string target = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment.zip";
-
-            StatusUpdate("Downloading repository zip...", timestamp);
+            StatusUpdate("Downloading the Tingen-Development repository...", dateTimeStamp);
             var client = new WebClient();
-            client.DownloadFile(url, target);
+            client.DownloadFile(ZipUrl, ZipDownloadPath);
         }
 
-        private static void ExtractRepoZip(string timestamp)
+        /// <summary> Extract the Tingen-Development repository zip file. </summary>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void ExtractRepoZip(string dateTimeStamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment.zip";
-            const string target = @"C:\TingenData\Lieutenant\Staging";
-
-            StatusUpdate("Extracting repository zip...", timestamp);
-            ZipFile.ExtractToDirectory(source, target);
+            StatusUpdate("Extracting the Tingen-Development zip file...", dateTimeStamp);
+            ZipFile.ExtractToDirectory(ZipDownloadPath, StagingRoot);
         }
 
-        private static void RefreshServiceDirectory(string timestamp)
+        /// <summary>Refresh the UAT Tingen web service.</summary>
+        /// <remarks>
+        ///  <para>
+        ///   - When the TingenUatRoslynPath is created, it will also create the:
+        ///    - TingenUatServicePath
+        ///    - TingenUatServicePath\bin
+        ///  </para>
+        /// </remarks>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void RefreshServiceDirectory(string dateTimeStamp)
         {
-            const string serviceDirectory = @"C:\Tingen\UAT";
-            const string roslynDirectory = @"C:\Tingen\UAT\bin\roslyn";
-
-            if (Directory.Exists(@"C:\Tingen\UAT"))
+            if (Directory.Exists(TingenUatServiceRoot))
             {
-                StatusUpdate("Refreshing web service directory...", timestamp);
-                Directory.Delete(serviceDirectory, true);
-                Directory.CreateDirectory(roslynDirectory);
+                StatusUpdate("Refreshing the UAT Tingen web service directory...", dateTimeStamp);
+                Directory.Delete(TingenUatServiceRoot, true);
+                Directory.CreateDirectory(TingenUatServiceRoslynPath);
             }
             else
             {
-                Directory.CreateDirectory(roslynDirectory);
+                Directory.CreateDirectory(TingenUatServiceRoslynPath);
             }
         }
 
-        private static void CopyBinFiles(string timestamp)
+        /// <summary>Copy the Tingen-Development bin files to the UAT Tingen web service directory.</summary>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void CopyBinFiles(string dateTimeStamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment-development\src\bin";
-            const string target = @"C:\Tingen\UAT\bin";
+            StatusUpdate("Copying Tingen-Development files to the UAT Tingen web service directory...", dateTimeStamp);
 
-            StatusUpdate("Copying repository files...", timestamp);
-
-            CopyDirectory(source, target, timestamp);
+            CopyDirectory(TingenStagingBinPath, TingenUatServiceBinPath, dateTimeStamp);
         }
 
-        private static void CopyServiceFiles(string timestamp)
+        /// <summary>Copy the Tingen-Development service files to the UAT Tingen web service directory.</summary>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void CopyServiceFiles(string dateTimeStamp)
         {
-            const string source = @"C:\TingenData\Lieutenant\Staging\TingenDevelopment-development\src";
-            const string target = @"C:\Tingen\UAT";
-
-            foreach (string file in GetServiceFiles())
+            foreach (string serviceFile in GetServiceFiles())
             {
-                StatusUpdate($"Copying {file}...", timestamp);
-                File.Copy($@"{source}\{file}", $@"{target}\{file}");
+                StatusUpdate($"Copying {serviceFile}...", dateTimeStamp);
+                File.Copy($@"{TingenStagingServiceRoot}\{serviceFile}", $@"{TingenUatServiceRoot}\{serviceFile}");
             }
         }
 
-        private static void CopyDirectory(string source, string target, string timestamp)
+        /// <summary>Copy the source directory to the target directory.</summary>
+        /// <param name="sourcePath">The source path to copy from.</param>
+        /// <param name="targetPath">The target path to copy to.</param>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void CopyDirectory(string sourcePath, string targetPath, string dateTimeStamp)
         {
-            DirectoryInfo dirToCopy       = new DirectoryInfo(source);
-            DirectoryInfo[] subDirsToCopy = GetSubDirs(source, target);
+            DirectoryInfo dirToCopy = new DirectoryInfo(sourcePath);
+            DirectoryInfo[] subDirsToCopy = GetSubDirs(sourcePath); // redundant
 
             foreach (FileInfo file in dirToCopy.GetFiles())
             {
-                StatusUpdate($"Copying {file.FullName}...", timestamp);
-                _=file.CopyTo(Path.Combine(target, file.Name));
+                StatusUpdate($"Copying {file.FullName}...", dateTimeStamp);
+                _=file.CopyTo(Path.Combine(targetPath, file.Name));
             }
 
             foreach (var (subDir, newTargetDir) in from DirectoryInfo subDir in subDirsToCopy
-                                                   let newTargetDir = Path.Combine(target, subDir.Name)
+                                                   let newTargetDir = Path.Combine(targetPath, subDir.Name)
                                                    select (subDir, newTargetDir))
             {
-                StatusUpdate($"Copying {subDir}...", timestamp);
-                CopyDirectory(subDir.FullName, newTargetDir, timestamp);
+                StatusUpdate($"Copying {subDir}...", dateTimeStamp);
+                CopyDirectory(subDir.FullName, newTargetDir, dateTimeStamp);
             }
-
         }
 
-        private static DirectoryInfo[] GetSubDirs(string source, string target)
+        /// <summary>Get the subdirectories of the source directory.</summary>
+        /// <param name="sourcePath">The path to get the subdirectories of.</param>
+        /// <returns>The subdirectories of the sourcePath.</returns>
+        private static DirectoryInfo[] GetSubDirs(string sourcePath)
         {
-            DirectoryInfo dirToCopy = new DirectoryInfo(source);
+            DirectoryInfo dirToCopy = new DirectoryInfo(sourcePath);
 
             return dirToCopy.GetDirectories();
         }
 
-        private static void StatusUpdate(string message, string timestamp)
+        /// <summary>Write a status update to the console and log file.</summary>
+        /// <param name="message">The status update to display/write.</param>
+        /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
+        private static void StatusUpdate(string message, string dateTimeStamp)
         {
             Console.WriteLine(message);
-            File.AppendAllText($@"C:\TingenData\Lieutenant\Logs\{timestamp}.devdeploy", message);
+            File.AppendAllText($@"{LogRoot}\{dateTimeStamp}.devdeploy", message);
         }
 
+        /// <summary>Creates a list of the required Tingen-DevDeploy directories.</summary>
+        /// <remarks>
+        ///  <para>
+        ///   - There are actually four directories that are required for Tingen-DevDeploy, but the other two are
+        ///   created when these two are.
+        ///  </para>
+        /// </remarks>
+        /// <returns></returns>
         private static List<string> GetListOfDataDirectories() =>
         [
-            @"C:\TingenData",
-            @"C:\TingenData\Lieutenant",
-            @"C:\TingenData\Lieutenant\Logs",
-            @"C:\TingenData\Lieutenant\Staging",
-            @"C:\TingenData\Lieutenant\Temporary",
+            LogRoot,
+            StagingRoot
         ];
 
+        /// <summary>Get the list of service files to copy to the UAT Tingen web service directory.</summary>
+        /// <returns>A list of the required Tingen service files.</returns>
         private static List<string> GetServiceFiles()
         {
-            // This will eventually be replaced with "TingenDevelopment.asmx" and "TingenDevelopment.asmx.cs"
-
             return
             [
                 "Tingen_development.asmx",
