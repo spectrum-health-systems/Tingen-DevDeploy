@@ -75,7 +75,7 @@ namespace TingenDevDeploy
         private static void DownloadRepoZip(string timestamp)
         {
             const string url = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
-            const string target = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment.zip";
+            const string target = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
 
             StatusUpdate("Downloading repository zip...", timestamp);
             var client = new WebClient();
@@ -84,7 +84,7 @@ namespace TingenDevDeploy
 
         private static void ExtractRepoZip(string timestamp)
         {
-            const string source = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment.zip";
+            const string source = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
             const string target = @"C:\TingenData\DevDeploy\Staging";
 
             StatusUpdate("Extracting repository zip...", timestamp);
@@ -110,7 +110,7 @@ namespace TingenDevDeploy
 
         private static void CopyBinFiles(string timestamp)
         {
-            const string source = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment-development\src\bin";
+            const string source = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src\bin";
             const string target = @"C:\Tingen\UAT\bin";
 
             StatusUpdate("Copying repository files...", timestamp);
@@ -120,7 +120,7 @@ namespace TingenDevDeploy
 
         private static void CopyServiceFiles(string timestamp)
         {
-            const string source = @"C:\TingenData\DevDeploy\Staging\TingenDevelopment-development\src";
+            const string source = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src";
             const string target = @"C:\Tingen\UAT";
 
             foreach (string file in GetServiceFiles())
