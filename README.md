@@ -10,27 +10,25 @@
 
 # About Tingen-DevDeploy
 
-Tingen-DevDeploy simple command-line utility that deploys the *development branch* of the *Tingen-Development* repository.
+Tingen-DevDeploy simple command-line utility that deploys the ***development branch*** of the ***Tingen-Development*** repository.
 
-Tingen-DevDeploy was created to make deploying quick iterations of Tingen-Development for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway.)
-
-
-so it's the source code isn't elegant, doesn't really follow best practices, etc. But it gets the job done, and probably won't have to be modified from here on out.
+Tingen-DevDeploy was created to make deploying quick iterations of Tingen-Development for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway).
 
 ## The Good
 
 - A single, portable file.
-- Logs everything
+- Logs everything.
 - Gets the job done!
 
 ## The Bad
 
-- Not customizable (everything is hardcoded)
-- Is specifically for the *development* branch of the *Tingen_development* repository
-- 
+- Not customizable (everything is hardcoded).
+- Is specifically for the ***development branch*** of the ***Tingen_development*** repository.
+- Only works in Windows.
+
 ## The Ugly
 
-- Source code isn't elegent, and doesn't follow best practices
+- Source code isn't elegant, and doesn't follow best practices.
 
 # Installation
 
@@ -52,7 +50,7 @@ When you execute TingenDevDeploy, it:
 
 1. Verifies that a log directory exists
 2. Verifies the Tingen-DevDeploy framework
-3. Downloads the *development* branch of the *Tingen_development* repository
+3. Downloads the ***development branch*** of the ***Tingen_development*** repository
 4. Extracts the downloaded repository data
 5. Removes/recreates the Tingen_development web service directory
 6. Copies the necessary web service files to the web service directory
