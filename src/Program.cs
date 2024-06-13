@@ -5,7 +5,7 @@
 // Licensed under the Apache 2.0 license.
 // ================================================================ 240613 =====
 
-// b240613.1036
+// b240613.1206
 
 /* Please see the Tingen-DevDeploy README for more information.
  */
@@ -18,15 +18,15 @@ namespace TingenDevDeploy
     /// <summary>The main entry point for the application.</summary>
     internal static class Program
     {
-        private const string LogRoot = @"C:\TingenData\DevDeploy\Logs";
-        private const string StagingRoot = @"C:\TingenData\DevDeploy\Staging";
-        private const string ZipUrl = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
-        private const string ZipDownloadPath = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
-        private const string TingenUatServiceRoot = @"C:\Tingen\UAT";
+        private const string LogRoot                    = @"C:\TingenData\DevDeploy\Logs";
+        private const string StagingRoot                = @"C:\TingenData\DevDeploy\Staging";
+        private const string ZipUrl                     = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
+        private const string ZipDownloadPath            = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
+        private const string TingenUatServiceRoot       = @"C:\Tingen\UAT";
         private const string TingenUatServiceRoslynPath = @"C:\Tingen\UAT\bin\roslyn";
-        private const string TingenStagingBinPath = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src\bin";
-        private const string TingenUatServiceBinPath = @"C:\Tingen\UAT\bin";
-        private const string TingenStagingServiceRoot = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src";
+        private const string TingenStagingBinPath       = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src\bin";
+        private const string TingenUatServiceBinPath    = @"C:\Tingen\UAT\bin";
+        private const string TingenStagingServiceRoot   = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src";
 
         /// <summary>Starting point.</summary>
         /// <param name="args">The passed arguments.</param>
@@ -37,7 +37,6 @@ namespace TingenDevDeploy
             var dateTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             VerifyLogPath();
-            //VerifyFramework(timestamp);
             VerifyDataPaths(dateTimeStamp);
             RefreshStaging(dateTimeStamp);
             RefreshServiceDirectory(dateTimeStamp);
@@ -46,10 +45,6 @@ namespace TingenDevDeploy
             CopyBinFiles(dateTimeStamp);
             CopyServiceFiles(dateTimeStamp);
         }
-
-        /////// <summary> Verifies the Tingen-DevDeploy framework.</summary>
-        /////// <param name="timestamp"></param>
-        ////private static void VerifyFramework(string timestamp) => VerifyDataDirectories(timestamp);
 
         /// <summary>Verify the log directory exists.</summary>
         /// <remarks>
@@ -94,7 +89,7 @@ namespace TingenDevDeploy
         /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
         private static void DownloadRepoZip(string dateTimeStamp)
         {
-            StatusUpdate("Downloading the development branch of the Tingen-Development repository...", dateTimeStamp);
+            StatusUpdate("Downloading the Tingen-Development repository...", dateTimeStamp);
             var client = new WebClient();
             client.DownloadFile(ZipUrl, ZipDownloadPath);
         }
@@ -103,7 +98,7 @@ namespace TingenDevDeploy
         /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
         private static void ExtractRepoZip(string dateTimeStamp)
         {
-            StatusUpdate("Extracting Tingen-Development zip...", dateTimeStamp);
+            StatusUpdate("Extracting the Tingen-Development zip file...", dateTimeStamp);
             ZipFile.ExtractToDirectory(ZipDownloadPath, StagingRoot);
         }
 
@@ -175,11 +170,11 @@ namespace TingenDevDeploy
         }
 
         /// <summary>Get the subdirectories of the source directory.</summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        private static DirectoryInfo[] GetSubDirs(string source)
+        /// <param name="sourcePath">The path to get the subdirectories of.</param>
+        /// <returns>The subdirectories of the sourcePath.</returns>
+        private static DirectoryInfo[] GetSubDirs(string sourcePath)
         {
-            DirectoryInfo dirToCopy = new DirectoryInfo(source);
+            DirectoryInfo dirToCopy = new DirectoryInfo(sourcePath);
 
             return dirToCopy.GetDirectories();
         }
@@ -193,20 +188,13 @@ namespace TingenDevDeploy
             File.AppendAllText($@"{LogRoot}\{dateTimeStamp}.devdeploy", message);
         }
 
-        //private const string LogRoot = @"C:\TingenData\DevDeploy\Logs";
-        //private const string StagingRoot = @"C:\TingenData\DevDeploy\Staging";
-        //private const string ZipUrl = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
-        //private const string ZipDownloadPath = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
-        //private const string TingenUatServiceRoot = @"C:\Tingen\UAT";
-        //private const string TingenUatServiceRoslynPath = @"C:\Tingen\UAT\bin\roslyn";
-        //private const string TingenStagingBinPath = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src\bin";
-        //private const string TingenUatServiceBinPath = @"C:\Tingen\UAT\bin";
-        //private const string TingenStagingServiceRoot = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src";
-
-
-        /// <summary>
-        /// Should create all.
-        /// </summary>
+        /// <summary>Creates a list of the required Tingen-DevDeploy directories.</summary>
+        /// <remarks>
+        ///  <para>
+        ///   - There are actually four directories that are required for Tingen-DevDeploy, but the other two are
+        ///   created when these two are.
+        ///  </para>
+        /// </remarks>
         /// <returns></returns>
         private static List<string> GetListOfDataDirectories() =>
         [
@@ -214,16 +202,8 @@ namespace TingenDevDeploy
             StagingRoot
         ];
 
-
-        //private static List<string> GetListOfDataDirectories() =>
-        //[
-        //    @"C:\TingenData",
-        //    @"C:\TingenData\DevDeploy",
-        //    @"C:\TingenData\DevDeploy\Logs",
-        //    @"C:\TingenData\DevDeploy\Staging",
-        //    @"C:\TingenData\DevDeploy\Temporary",
-        //];
-
+        /// <summary>Get the list of service files to copy to the UAT Tingen web service directory.</summary>
+        /// <returns>A list of the required Tingen service files.</returns>
         private static List<string> GetServiceFiles()
         {
             return
