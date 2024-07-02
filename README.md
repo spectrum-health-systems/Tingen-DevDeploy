@@ -4,7 +4,7 @@
 
   ![logo](./.github/images/logos/TingenDevDeploy_README.png)
 
-  Version 1.3.0
+  ![BranchWarning](https://img.shields.io/badge/Version-1.3.0-darkgreen?style=for-the-badge)
 
 </div>
 
