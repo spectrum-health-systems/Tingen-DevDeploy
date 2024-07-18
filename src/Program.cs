@@ -1,11 +1,12 @@
-﻿// ================================================================ v1.3.0 =====
+﻿// ================================================================ v1.3.1 =====
 // Tingen-DevDeploy: A command-line deployment utility for Tingen-Development.
 // https://github.com/spectrum-health-systems/AbatabLieutenant
 // Copyright (c) A Pretty Cool Program. All rights reserved.
 // Licensed under the Apache 2.0 license.
-// ================================================================ 240613 =====
+// ================================================================ 240718 =====
 
-// b240613.1209
+// u240718.1052_code
+// u240613.1209_documentation
 
 /* Please see the Tingen-DevDeploy README for more information.
  */
@@ -185,7 +186,7 @@ namespace TingenDevDeploy
         private static void StatusUpdate(string message, string dateTimeStamp)
         {
             Console.WriteLine(message);
-            File.AppendAllText($@"{LogRoot}\{dateTimeStamp}.devdeploy", message);
+            File.AppendAllText($@"{LogRoot}\{dateTimeStamp}.devdeploy", $"{message}{Environment.NewLine}");
         }
 
         /// <summary>Creates a list of the required Tingen-DevDeploy directories.</summary>
