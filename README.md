@@ -10,9 +10,9 @@
 
 # About Tingen-DevDeploy
 
-Tingen-DevDeploy simple command-line utility that deploys the ***development branch*** of the ***Tingen-Development*** repository.
+Tingen DevDeploy simple command-line utility that deploys the ***development branch*** of the ***Tingen-Development*** repository.
 
-Tingen-DevDeploy was created to make deploying quick iterations of Tingen-Development for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway).
+Tingen DevDeploy was created to make deploying quick iterations of Tingen-Development for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway).
 
 ## The Good
 
@@ -32,21 +32,21 @@ Tingen-DevDeploy was created to make deploying quick iterations of Tingen-Develo
 
 # Installation
 
-Since Tingen-DevDeploy is a single, portable file, all you need to do to "install" it is:
+Since Tingen DevDeploy is a single, portable file, all you need to do to "install" it is:
 
 1. Download the [latest release](https://github.com/spectrum-health-systems/Tingen-DevDeploy/releases)
-2. Extract Tingen-DevDeploy to a location where it can be executed
+2. Extract Tingen DevDeploy to a location where it can be executed
 
 # Usage
 
-To use Tingen-DevDeploy:
+To use Tingen DevDeploy:
 
-1. Open a command line where you extracted TingenDevDeploy
+1. Open a command line where you extracted Tingen DevDeploy
 2. Type `TingenDevDeploy`
 
 ## What Tingen-DevDeploy does
 
-When you execute TingenDevDeploy, it:
+When you execute `TingenDevDeploy.exe`, it:
 
 1. Verifies that a log directory exists
 2. Verifies the Tingen-DevDeploy framework
