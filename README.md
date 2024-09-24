@@ -4,7 +4,7 @@
 
   ![logo](./.github/images/logos/TingenDevDeploy_README.png)
 
-  ![BranchWarning](https://img.shields.io/badge/Version-1.3.1-darkgreen?style=for-the-badge)
+  ![BranchWarning](https://img.shields.io/badge/Version-1.3.1-seagreen?style=for-the-badge)
 
 </div>
 
@@ -54,7 +54,3 @@ When you execute TingenDevDeploy, it:
 4. Extracts the downloaded repository data
 5. Removes/recreates the Tingen_development web service directory
 6. Copies the necessary web service files to the web service directory
-
-# Documentation
-
-[API documentation](https://spectrum-health-systems.github.io/Tingen-DevDeploy/)
