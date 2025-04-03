@@ -1,10 +1,10 @@
-<!-- u240613 -->
+<!-- u250403 -->
 
 <div align="center">
 
   ![logo](./.github/image/logo/TingenDevDeploy_logo_320x420.png)
 
-  ![BranchWarning](https://img.shields.io/badge/Version-1.3.1-seagreen?style=for-the-badge)
+  ![BranchWarning](https://img.shields.io/badge/Version-1.4-seagreen?style=for-the-badge)
 
 </div>
 
