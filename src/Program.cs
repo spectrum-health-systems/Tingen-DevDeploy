@@ -1,14 +1,32 @@
-﻿// ================================================================ v1.3.1 =====
-// Tingen-DevDeploy: A command-line deployment utility for Tingen-Development.
-// https://github.com/spectrum-health-systems/AbatabLieutenant
-// Copyright (c) A Pretty Cool Program. All rights reserved.
-// Licensed under the Apache 2.0 license.
-// ================================================================ 240718 =====
+﻿/*
+* ████████╗██╗███╗   ██╗ ██████╗ ███████╗███╗   ██╗
+* ╚══██╔══╝██║████╗  ██║██╔════╝ ██╔════╝████╗  ██║
+*    ██║   ██║██╔██╗ ██║██║  ███╗█████╗  ██╔██╗ ██║
+*    ██║   ██║██║╚██╗██║██║   ██║██╔══╝  ██║╚██╗██║
+*    ██║   ██║██║ ╚████║╚██████╔╝███████╗██║ ╚████║
+*    ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝
+*
+*
+* ██████╗ ███████╗██╗   ██╗██████╗ ███████╗██████╗ ██╗      ██████╗ ██╗   ██╗
+* ██╔══██╗██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝
+* ██║  ██║█████╗  ██║   ██║██║  ██║█████╗  ██████╔╝██║     ██║   ██║ ╚████╔╝ 
+* ██║  ██║██╔══╝  ╚██╗ ██╔╝██║  ██║██╔══╝  ██╔═══╝ ██║     ██║   ██║  ╚██╔╝  
+* ██████╔╝███████╗ ╚████╔╝ ██████╔╝███████╗██║     ███████╗╚██████╔╝   ██║   
+* ╚═════╝ ╚══════╝  ╚═══╝  ╚═════╝ ╚══════╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   
+                                                                           
 
-// u240718.1052_code
-// u240613.1209_documentation
+* https://github.com/APrettyCoolProgram/Tingen-DevDeploy
+* Copyright (c) A Pretty Cool Program. All rights reserved.
+* Licensed under the Apache 2.0 license.
+*
+* Release 1.4
+*/
 
-/* Please see the Tingen-DevDeploy README for more information.
+// u250403_code
+// u250403_documentation
+
+/* Please see the Tingen-DevDeploy README.md for more information.
+ * https://github.com/spectrum-health-systems/Tingen-DevDeploy
  */
 
 using System.IO.Compression;
@@ -19,15 +37,17 @@ namespace TingenDevDeploy
     /// <summary>The main entry point for the application.</summary>
     internal static class Program
     {
-        private const string LogRoot                    = @"C:\TingenData\DevDeploy\Logs";
-        private const string StagingRoot                = @"C:\TingenData\DevDeploy\Staging";
-        private const string ZipUrl                     = "https://github.com/spectrum-health-systems/Tingen-Development/archive/refs/heads/development.zip";
-        private const string ZipDownloadPath            = @"C:\TingenData\DevDeploy\Staging\Tingen-Development.zip";
-        private const string TingenUatServiceRoot       = @"C:\Tingen\UAT";
-        private const string TingenUatServiceRoslynPath = @"C:\Tingen\UAT\bin\roslyn";
-        private const string TingenStagingBinPath       = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src\bin";
-        private const string TingenUatServiceBinPath    = @"C:\Tingen\UAT\bin";
-        private const string TingenStagingServiceRoot   = @"C:\TingenData\DevDeploy\Staging\Tingen-Development-development\src";
+        private const string LogRoot                            = @"C:\Tingen_Data\DevDeploy\Logs";
+        private const string StagingRoot                        = @"C:\Tingen_Data\DevDeploy\Staging";
+        private const string ZipUrl                             = "https://github.com/spectrum-health-systems/Tingen-WebService/archive/refs/heads/development.zip";
+        private const string ZipDownloadPath                    = @"C:\Tingen_Data\DevDeploy\Staging\Tingen-WebService.zip";
+        private const string TingenUatServiceRoot               = @"C:\Tingen\UAT";
+        private const string TingenUatServiceRoslynPath         = @"C:\Tingen\UAT\bin\roslyn";
+        private const string TingenUatServiceAppDataPath        = @"C:\Tingen\UAT\bin\AppData";
+        private const string TingenUatServiceAppDataRuntimePath = @"C:\Tingen\UAT\bin\AppData\Runtime";
+        private const string TingenStagingBinPath               = @"C:\Tingen_Data\DevDeploy\Staging\Tingen-WebService-development\src\bin";
+        private const string TingenUatServiceBinPath            = @"C:\Tingen\UAT\bin";
+        private const string TingenStagingServiceRoot           = @"C:\Tingen_Data\DevDeploy\Staging\Tingen-WebService-development\src";
 
         /// <summary>Starting point.</summary>
         /// <param name="args">The passed arguments.</param>
@@ -38,6 +58,7 @@ namespace TingenDevDeploy
             var dateTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             VerifyLogPath();
+            Start(dateTimeStamp);
             VerifyDataPaths(dateTimeStamp);
             RefreshStaging(dateTimeStamp);
             RefreshServiceDirectory(dateTimeStamp);
@@ -45,6 +66,16 @@ namespace TingenDevDeploy
             ExtractRepoZip(dateTimeStamp);
             CopyBinFiles(dateTimeStamp);
             CopyServiceFiles(dateTimeStamp);
+        }
+
+
+        private static void Start(string dateTimeStamp)
+        {
+            var logHeader = $"Tingen DevDeploy v 1.4{Environment.NewLine}" +
+                            $"======================{Environment.NewLine}" +
+                            Environment.NewLine;
+
+            StatusUpdate(logHeader, dateTimeStamp);
         }
 
         /// <summary>Verify the log directory exists.</summary>
@@ -90,7 +121,7 @@ namespace TingenDevDeploy
         /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
         private static void DownloadRepoZip(string dateTimeStamp)
         {
-            StatusUpdate("Downloading the Tingen-Development repository...", dateTimeStamp);
+            StatusUpdate("Downloading the Tingen-WebService development branch...", dateTimeStamp);
             var client = new WebClient();
             client.DownloadFile(ZipUrl, ZipDownloadPath);
         }
@@ -99,7 +130,7 @@ namespace TingenDevDeploy
         /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
         private static void ExtractRepoZip(string dateTimeStamp)
         {
-            StatusUpdate("Extracting the Tingen-Development zip file...", dateTimeStamp);
+            StatusUpdate("Extracting the Tingen-WebService development branch...", dateTimeStamp);
             ZipFile.ExtractToDirectory(ZipDownloadPath, StagingRoot);
         }
 
@@ -116,9 +147,11 @@ namespace TingenDevDeploy
         {
             if (Directory.Exists(TingenUatServiceRoot))
             {
-                StatusUpdate("Refreshing the UAT Tingen web service directory...", dateTimeStamp);
+                StatusUpdate("Refreshing the UAT Tingen Web Service directory...", dateTimeStamp);
                 Directory.Delete(TingenUatServiceRoot, true);
                 Directory.CreateDirectory(TingenUatServiceRoslynPath);
+                Directory.CreateDirectory(TingenUatServiceAppDataPath);
+                Directory.CreateDirectory(TingenUatServiceAppDataRuntimePath);
             }
             else
             {
@@ -130,7 +163,7 @@ namespace TingenDevDeploy
         /// <param name="dateTimeStamp">The date/time when Tingen-DevDeploy was executed.</param>
         private static void CopyBinFiles(string dateTimeStamp)
         {
-            StatusUpdate("Copying Tingen-Development files to the UAT Tingen web service directory...", dateTimeStamp);
+            StatusUpdate("Copying Tingen Web Service files to the UAT Tingen Web Service directory...", dateTimeStamp);
 
             CopyDirectory(TingenStagingBinPath, TingenUatServiceBinPath, dateTimeStamp);
         }
@@ -209,8 +242,8 @@ namespace TingenDevDeploy
         {
             return
             [
-                "Tingen_development.asmx",
-                "Tingen_development.asmx.cs",
+                "TingenWebService.asmx",
+                "TingenWebService.asmx.cs",
                 "packages.config",
                 "Web.config",
                 "Web.Debug.config",

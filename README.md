@@ -1,18 +1,18 @@
-<!-- u240613 -->
+<!-- u250403 -->
 
 <div align="center">
 
-  ![logo](./.github/images/logos/TingenDevDeploy_README.png)
+  ![logo](./.github/image/logo/TingenDevDeploy_logo_320x420.png)
 
-  ![BranchWarning](https://img.shields.io/badge/Version-1.3.1-seagreen?style=for-the-badge)
+  ![BranchWarning](https://img.shields.io/badge/Version-1.4-seagreen?style=for-the-badge)
 
 </div>
 
 # About Tingen-DevDeploy
 
-Tingen DevDeploy simple command-line utility that deploys the ***development branch*** of the ***Tingen-Development*** repository.
+Tingen DevDeploy simple command-line utility that deploys the ***development branch*** of the ***Tingen-WebService*** repository.
 
-Tingen DevDeploy was created to make deploying quick iterations of Tingen-Development for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway).
+Tingen DevDeploy was created to make deploying quick iterations of the Tingen Web Services for Spectrum Health Systems, so it won't work for other organizations without modification (which is fine, since I'm the only person developing Tingen anyway).
 
 ## The Good
 
@@ -23,7 +23,7 @@ Tingen DevDeploy was created to make deploying quick iterations of Tingen-Develo
 ## The Bad
 
 - Not customizable (everything is hardcoded).
-- Is specifically for the ***development branch*** of the ***Tingen_development*** repository.
+- Is specifically for the ***development branch*** of the ***Tingen-WebService*** repository.
 - Only works in Windows.
 
 ## The Ugly
@@ -50,7 +50,7 @@ When you execute `TingenDevDeploy.exe`, it:
 
 1. Verifies that a log directory exists
 2. Verifies the Tingen-DevDeploy framework
-3. Downloads the ***development branch*** of the ***Tingen_development*** repository
+3. Downloads the ***development branch*** of the ***Tingen-WebService*** repository
 4. Extracts the downloaded repository data
-5. Removes/recreates the Tingen_development web service directory
+5. Removes/recreates the directory where the Tingen Web Service is hosted
 6. Copies the necessary web service files to the web service directory
